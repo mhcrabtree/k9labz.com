@@ -22,6 +22,10 @@
      image     { src, caption }
      gallery   { items: [{ src, caption }] }
      video     { youtubeId, title }
+     sources   { items: [{ title, publisher, url, note }] }  // numbered list
+
+   Citations: put [1], [2], ... in any body text to link to the
+   matching entry in the page's `sources` block.
    ──────────────────────────────────────────────────────── */
 (function () {
   'use strict';
@@ -48,7 +52,8 @@
     quote: renderQuote,
     image: renderImage,
     gallery: renderGallery,
-    video: renderVideo
+    video: renderVideo,
+    sources: renderSources
   };
 
   root.innerHTML = renderHeader() + renderPage();
@@ -117,7 +122,7 @@
   function renderText(b) {
     var parts = [].concat(b.text || []);
     var html = '';
-    for (var i = 0; i < parts.length; i++) html += '<p>' + esc(parts[i]) + '</p>';
+    for (var i = 0; i < parts.length; i++) html += '<p>' + cite(parts[i]) + '</p>';
     return html;
   }
 
@@ -127,7 +132,7 @@
         '<div class="k9-score-score">' + esc(b.score) + '<small>/' + esc(b.outOf || 10) + '</small></div>' +
         '<div class="k9-score-text">' +
           (b.headline ? '<strong>' + esc(b.headline) + '</strong>' : '') +
-          esc(b.text) +
+          cite(b.text) +
         '</div>' +
       '</div>'
     );
@@ -149,7 +154,7 @@
           '<div class="k9-card-body">' +
             (c.kicker ? '<div class="k9-card-kicker">' + esc(c.kicker) + '</div>' : '') +
             '<div class="k9-card-title">' + esc(c.title) + '</div>' +
-            (c.text ? '<div class="k9-card-text">' + esc(c.text) + '</div>' : '') +
+            (c.text ? '<div class="k9-card-text">' + cite(c.text) + '</div>' : '') +
           '</div>' +
         '</div>'
       );
@@ -180,7 +185,7 @@
     if (!list.length) return '';
     var rows = '';
     for (var i = 0; i < list.length; i++) {
-      rows += '<tr><th>' + esc(list[i].label) + '</th><td>' + esc(list[i].value) + '</td></tr>';
+      rows += '<tr><th>' + esc(list[i].label) + '</th><td>' + cite(list[i].value) + '</td></tr>';
     }
     return '<table class="k9-facts">' + rows + '</table>';
   }
@@ -195,7 +200,7 @@
         '<div class="k9-item">' +
           '<h3>' + esc(s.title) + '</h3>' +
           (s.meta ? '<div class="k9-item-meta">' + esc(s.meta) + '</div>' : '') +
-          '<p>' + esc(s.text) + '</p>' +
+          '<p>' + cite(s.text) + '</p>' +
         '</div>'
       );
     }
@@ -227,7 +232,7 @@
     return (
       '<div class="k9-callout">' +
         (b.label ? '<div class="k9-label">' + esc(b.label) + '</div>' : '') +
-        '<p>' + esc(b.text) + '</p>' +
+        '<p>' + cite(b.text) + '</p>' +
         (b.link ? '<p><a href="' + esc(b.link.href) + '">' + esc(b.link.label) + ' →</a></p>' : '') +
       '</div>'
     );
@@ -236,7 +241,7 @@
   function renderQuote(b) {
     return (
       '<blockquote class="k9-quote">' +
-        esc(b.text) +
+        cite(b.text) +
         (b.cite ? '<cite>— ' + esc(b.cite) + '</cite>' : '') +
       '</blockquote>'
     );
@@ -278,11 +283,35 @@
     );
   }
 
+  function renderSources(b) {
+    var list = b.items || [];
+    if (!list.length) return '';
+    var html = '';
+    for (var i = 0; i < list.length; i++) {
+      var src = list[i];
+      html += (
+        '<li id="src-' + (i + 1) + '">' +
+          '<a href="' + esc(src.url) + '" target="_blank" rel="noopener">' + esc(src.title) + '</a>' +
+          (src.publisher ? ' — ' + esc(src.publisher) : '') +
+          (src.note ? '<div class="k9-source-note">' + esc(src.note) + '</div>' : '') +
+        '</li>'
+      );
+    }
+    return '<ol class="k9-sources">' + html + '</ol>';
+  }
+
   /* ── Helpers ───────────────────────────────────────── */
+
+  // Escapes text, then turns [1], [2] ... into links to the sources list.
+  function cite(s) {
+    return esc(s).replace(/(\[\d+\])+/g, function (run) {
+      return '<sup class="k9-cite">' + run.replace(/\[(\d+)\]/g, '<a href="#src-$1">[$1]</a>') + '</sup>';
+    });
+  }
 
   function listItems(items) {
     var html = '';
-    for (var i = 0; i < items.length; i++) html += '<li>' + esc(items[i]) + '</li>';
+    for (var i = 0; i < items.length; i++) html += '<li>' + cite(items[i]) + '</li>';
     return html;
   }
 

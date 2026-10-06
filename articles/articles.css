@@ -372,3 +372,12 @@ h1, h2, h3, .k9-label {
 
 .k9-list { padding-left: 20px; }
 .k9-list li + li { margin-top: 6px; }
+
+/* Sources & citations */
+
+.k9-cite { font-size: 0.7em; line-height: 0; margin-left: 1px; white-space: nowrap; }
+.k9-cite a { text-decoration: none; }
+.k9-sources { padding-left: 22px; font-size: 0.92rem; color: var(--k9-text-muted); }
+.k9-sources li + li { margin-top: 8px; }
+.k9-sources li:target { color: var(--k9-text); }
+.k9-source-note { font-size: 0.85rem; color: var(--k9-footer); }
