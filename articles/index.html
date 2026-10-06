@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Articles — K9Labz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;600&family=Nunito:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="articles.css">
+</head>
+<body>
+
+<div class="k9-header">
+  <a href="../index.html"><img src="../logo.png" alt="K9Labz"></a>
+  <span class="k9-header-title">Articles</span>
+</div>
+
+<div class="k9-page">
+  <div class="k9-page-subtitle">
+    <div class="k9-page-subtitle-label">K9Labz — Articles</div>
+    <div class="k9-page-subtitle-detail">Stories, gear, and lessons from the work.</div>
+  </div>
+
+  <div class="k9-filters" id="k9-filters"></div>
+  <div class="k9-index-grid" id="k9-index"></div>
+
+  <div class="k9-page-footer">
+    &copy; 2026 <a href="https://craz.com">Crabtree Labz</a>
+  </div>
+</div>
+
+<script>
+// Newest first. `category` drives the filter buttons — use any name
+// (e.g. "Gear", "Stories", "Education"); new categories appear automatically.
+var ARTICLES = [
+  {
+    slug: "leash-system",
+    title: "The 3-Piece Leash System",
+    category: "Gear",
+    summary: "Three linkable sections — 1, 4, and 6 feet — that make five leash lengths, up to 11 feet.",
+    accentColor: "#C62828",
+    thumbnail: null
+  },
+  {
+    slug: "leash-color-codes",
+    title: "What Leash Colors Mean",
+    category: "Education",
+    summary: "Red, yellow, green, blue — what leash and collar colors tell other people about your dog.",
+    accentColor: "#C9A44A",
+    thumbnail: null
+  }
+];
+
+(function () {
+  var grid = document.getElementById('k9-index');
+  var filters = document.getElementById('k9-filters');
+
+  var categories = [];
+  for (var i = 0; i < ARTICLES.length; i++) {
+    if (categories.indexOf(ARTICLES[i].category) === -1) categories.push(ARTICLES[i].category);
+  }
+
+  if (categories.length > 1) {
+    var btns = '<button class="k9-filter is-active" data-cat="">All</button>';
+    for (var j = 0; j < categories.length; j++) {
+      btns += '<button class="k9-filter" data-cat="' + esc(categories[j]) + '">' + esc(categories[j]) + '</button>';
+    }
+    filters.innerHTML = btns;
+    filters.addEventListener('click', function (e) {
+      var btn = e.target.closest('.k9-filter');
+      if (!btn) return;
+      var active = filters.querySelectorAll('.k9-filter');
+      for (var k = 0; k < active.length; k++) active[k].classList.toggle('is-active', active[k] === btn);
+      render(btn.getAttribute('data-cat'));
+    });
+  }
+
+  render('');
+
+  function render(cat) {
+    var html = '';
+    for (var i = 0; i < ARTICLES.length; i++) {
+      var a = ARTICLES[i];
+      if (cat && a.category !== cat) continue;
+      var img = a.thumbnail
+        ? '<img class="k9-index-card-img" src="' + esc(a.thumbnail) + '" alt="' + esc(a.title) + '">'
+        : '<div class="k9-placeholder">' + esc(a.title) + '</div>';
+
+      html += (
+        '<a class="k9-index-card" href="' + esc(a.slug) + '/index.html" style="--k9-accent:' + esc(a.accentColor) + '">' +
+          img +
+          '<div class="k9-index-card-accent"></div>' +
+          '<div class="k9-index-card-body">' +
+            '<div class="k9-index-card-category">' + esc(a.category) + '</div>' +
+            '<div class="k9-index-card-title">' + esc(a.title) + '</div>' +
+            '<div class="k9-index-card-summary">' + esc(a.summary) + '</div>' +
+          '</div>' +
+        '</a>'
+      );
+    }
+    grid.innerHTML = html;
+  }
+
+  function esc(s) {
+    if (!s) return '';
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+})();
+</script>
+</body>
+</html>

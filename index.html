@@ -81,6 +81,25 @@
     .footer a:hover {
       text-decoration: underline;
     }
+    .nav-link {
+      display: inline-block;
+      margin-top: 32px;
+      font-family: 'Teko', sans-serif;
+      font-weight: 600;
+      font-size: 1.2rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      border: 1px solid var(--text);
+      padding: 8px 28px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-link:hover {
+      background: var(--text);
+      color: var(--bg);
+    }
   </style>
 </head>
 
@@ -89,6 +108,7 @@
     <div class="container">
       <img src="logo.png" alt="K9Labz" class="logo">
       <h1 class="slogan">Dedication. Discipline. Partnership.</h1>
+      <a href="articles/index.html" class="nav-link">Articles →</a>
     </div>
   </div>
   <div class="footer">&copy; 2026 <a href="https://craz.com">Crabtree Labz</a></div>
