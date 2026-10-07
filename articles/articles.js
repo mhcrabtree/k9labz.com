@@ -2,7 +2,7 @@
    Renders an article page from window.ARTICLE.
 
    ARTICLE = {
-     title, kicker, summary, author, published, meta, accentColor,
+     title, kicker, summary, author, published, updated, meta, accentColor,
      heroImage,
      blocks: [ { type: "...", heading: "...", ... }, ... ]
    }
@@ -85,7 +85,7 @@
   }
 
   function renderHero() {
-    var meta = [A.author, A.published].concat(A.meta || []).filter(Boolean).map(esc).join(' · ');
+    var meta = [A.author, A.published, A.updated && 'Last edited ' + A.updated].concat(A.meta || []).filter(Boolean).map(esc).join(' · ');
     var img = A.heroImage === undefined ? null : A.heroImage;
     return (
       '<header class="k9-hero">' +
