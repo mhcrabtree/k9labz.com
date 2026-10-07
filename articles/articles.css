@@ -381,3 +381,17 @@ h1, h2, h3, .k9-label {
 .k9-sources li + li { margin-top: 8px; }
 .k9-sources li:target { color: var(--k9-text); }
 .k9-source-note { font-size: 0.85rem; color: var(--k9-footer); }
+
+/* Click-to-load YouTube (see ytFacade in the script) */
+.yt-facade {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; aspect-ratio: 16 / 9; border: 0; margin: 0; padding: 0; cursor: pointer;
+  background: #141414; color: #e8e2d2; font: inherit;
+}
+.yt-facade .yt-play {
+  width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+  border: 2px solid #C9A44A; color: #C9A44A; font-size: 22px; padding-left: 4px;
+}
+.yt-facade .yt-note { font-size: 0.85rem; opacity: 0.75; }
+.yt-facade:hover .yt-play, .yt-facade:focus-visible .yt-play { background: #C9A44A; color: #141414; }
+.k9-video .yt-facade, .k9-video .yt-frame { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border: 0; }
