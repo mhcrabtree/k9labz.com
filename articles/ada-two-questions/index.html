@@ -18,6 +18,7 @@ var ARTICLE = {
   summary: "Under the ADA, a business can ask you only two questions about your service dog, and only when it isn't obvious what the dog does. Here's what they are, what's off limits, and how it ties into leashes and colors.",
   author: "K9Labz Handler",
   published: "October 2026",
+  updated: "October 6, 2026",
   accentColor: "#1565C0",
   heroImage: null,
 
@@ -35,7 +36,7 @@ var ARTICLE = {
       heading: "The Two Questions",
       items: [
         { title: "1. Is the dog a service animal required because of a disability?", meta: "A yes-or-no question", text: "Staff can ask whether the dog is a service animal needed because of a disability.[1][2] They can't ask what the disability is.[1]" },
-        { title: "2. What work or task has the dog been trained to perform?", meta: "Describe the task, not the condition", text: "Staff can ask what the dog has been trained to do for you.[1][2] A service animal is defined by its trained work, which is why this is the question that matters." }
+        { title: "2. What work or task has the dog been trained to perform?", meta: "Describe the task, not the condition", text: "Staff can ask what work or task the dog has been trained to perform.[1][2] The question is about the dog, not the person holding the leash, who may not be the person with the disability. A service animal is defined by its trained work, which is why this is the question that matters." }
       ]
     },
     {
@@ -44,14 +45,28 @@ var ARTICLE = {
       cite: "U.S. Department of Justice, ADA.gov Service Animal FAQ"
     },
     {
+      type: "callout",
+      label: "Read the Exact Wording",
+      text: "Neither question says \"your.\" The first asks whether the dog is required because of a disability, not your disability, and the second asks what work or task the dog has been trained to perform, not what it does for you.[1][2] Read quickly, it's easy to add those words, and that's how a common misconception starts: that the person holding the leash must be the person with the disability. The law doesn't say that."
+    },
+    {
       type: "list",
       heading: "What They Can't Ask",
       items: [
-        "What your disability is, or anything about its nature or extent.[1][3]",
+        "What the disability is, or anything about its nature or extent.[1][3]",
         "Medical documentation.[1]",
         "A special ID card, certificate, or training paperwork for the dog.[1][2]",
         "Proof the dog has been certified, trained, or licensed as a service animal as a condition of entry.[2][3]",
         "For the dog to demonstrate its task.[1][2]"
+      ]
+    },
+    {
+      type: "items",
+      heading: "Who Holds the Leash",
+      items: [
+        { title: "A Family Member", meta: "Federal guidance", text: "Under the ADA, the handler is usually the person with a disability or a third party who accompanies that person.[2] A parent may handle a child's service dog beside the mat while the child competes. The dog is still working for the child." },
+        { title: "A Trainer", meta: "Colorado law", text: "The ADA doesn't cover dogs still in training.[2] Colorado goes further: a trainer of a service animal, including one in training, has the right to be accompanied by the dog in public accommodations and other places open to the public.[4] Many people with disabilities rely on professional trainers, so this matters." },
+        { title: "A Caregiver", meta: "Federal guidance", text: "A hospital can exclude a service dog from areas like operating rooms, where the dog could compromise a sterile environment.[1] While the patient is in surgery, a family member or trainer may care for the dog, then bring it back once the patient is in recovery.[2]" }
       ]
     },
     {
@@ -87,7 +102,7 @@ var ARTICLE = {
       type: "items",
       heading: "Answering the Questions as a Handler",
       items: [
-        { title: "Keep It Short", meta: "Our approach", text: "\"Yes, he's a service dog.\" Then name the task. You don't owe anyone a story about your health." },
+        { title: "Keep It Short", meta: "Our approach", text: "\"Yes, he's a service dog.\" Then name the task. No one is owed a medical explanation." },
         { title: "Name the Task, Not the Diagnosis", meta: "Our approach", text: "Describe what the dog does (\"She's trained to provide balance support\" or \"He's trained to alert me before a medical episode\"), not the condition behind it." },
         { title: "Stay Calm and Polite", meta: "Our approach", text: "Most staff are just doing their job and may not know the rules. A calm, two-sentence answer usually ends the conversation. If they ask for papers, you can politely point out that the ADA doesn't require them.[2]" }
       ]
@@ -114,8 +129,9 @@ var ARTICLE = {
       heading: "Sources",
       items: [
         { title: "ADA Requirements: Service Animals", publisher: "U.S. Department of Justice, Civil Rights Division — ADA.gov (updated February 28, 2020)", url: "https://www.ada.gov/resources/service-animals-2010-requirements/", note: "\"When it is not obvious what service an animal provides, only limited inquiries are allowed. Staff may ask two questions: (1) is the dog a service animal required because of a disability, and (2) what work or task has the dog been trained to perform.\"" },
-        { title: "Frequently Asked Questions about Service Animals and the ADA", publisher: "U.S. Department of Justice, Civil Rights Division — ADA.gov", url: "https://www.ada.gov/resources/service-animals-faqs/", note: "See Q7 (the two questions), Q8 (no vest, ID tag, or harness required), and Q17 (no certification required)." },
-        { title: "28 CFR § 36.302(c)(6) — Service Animals: Inquiries (ADA Title III Regulations)", publisher: "U.S. Department of Justice — ADA.gov", url: "https://www.ada.gov/law-and-regs/regulations/title-iii-regulations/#-36302-modifications-in-policies-practices-or-procedures", note: "\"A public accommodation shall not ask about the nature or extent of a person's disability, but may make two inquiries to determine whether an animal qualifies as a service animal.\"" }
+        { title: "Frequently Asked Questions about Service Animals and the ADA", publisher: "U.S. Department of Justice, Civil Rights Division — ADA.gov", url: "https://www.ada.gov/resources/service-animals-faqs/", note: "See Q6 (dogs in training aren't covered by the ADA), Q7 (the two questions), Q8 (no vest, ID tag, or harness required), Q15 (a patient can arrange for someone else to care for the dog), Q17 (no certification required), and Q27 (the handler is usually the person with a disability or a third party who accompanies that person)." },
+        { title: "28 CFR § 36.302(c)(6) — Service Animals: Inquiries (ADA Title III Regulations)", publisher: "U.S. Department of Justice — ADA.gov", url: "https://www.ada.gov/law-and-regs/regulations/title-iii-regulations/#-36302-modifications-in-policies-practices-or-procedures", note: "\"A public accommodation shall not ask about the nature or extent of a person's disability, but may make two inquiries to determine whether an animal qualifies as a service animal.\"" },
+        { title: "C.R.S. § 24-34-803 — Rights of Individuals With Disabilities and Trainers of Service Animals", publisher: "Colorado Revised Statutes (via Colorado Public Law Library)", url: "https://colorado.public.law/statutes/crs_24-34-803", note: "A trainer of a service animal, or a person with a disability accompanied by an animal being trained as a service animal, may be accompanied by the animal in places of employment, housing, and public accommodation, public programs and transportation, and any other place open to the public." }
       ]
     }
   ]
