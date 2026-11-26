@@ -106,7 +106,24 @@ var ARTICLES = [
     });
   }
 
+  // AgentHubStudio publishes card photos chosen on the phone as slots.json beside this page.
+  applySlots();
   render('');
+
+  function applySlots() {
+    var data = null;
+    try {
+      var x = new XMLHttpRequest();
+      x.open('GET', 'slots.json', false);
+      x.send();
+      if (x.status === 200) data = JSON.parse(x.responseText).slots || null;
+    } catch (e) { data = null; }
+    if (!data) return;
+    for (var i = 0; i < ARTICLES.length; i++) {
+      var v = data['card.' + ARTICLES[i].slug];
+      if (v !== undefined) ARTICLES[i].thumbnail = v ? v.src : null;
+    }
+  }
 
   function render(cat) {
     var html = '';
