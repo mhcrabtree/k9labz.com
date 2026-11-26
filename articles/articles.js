@@ -33,6 +33,10 @@
   var A = window.ARTICLE;
   if (!A) return;
 
+  // AgentHubStudio publishes photos chosen on the phone as slots.json beside the page.
+  // Merge them over ARTICLE before rendering; without the file the page is unchanged.
+  applySlots();
+
   document.documentElement.style.setProperty('--k9-accent', A.accentColor || '#C9A44A');
 
   var root = document.getElementById('k9-root');
@@ -57,6 +61,42 @@
   };
 
   root.innerHTML = renderHeader() + renderPage();
+
+  /* ── Photo slots (slots.json) ──────────────────────── */
+
+  function loadSlots() {
+    try {
+      var x = new XMLHttpRequest();
+      x.open('GET', 'slots.json', false);
+      x.send();
+      if (x.status !== 200) return null;
+      return JSON.parse(x.responseText).slots || null;
+    } catch (e) { return null; }
+  }
+
+  // Slot ids: "hero", "b{block}" (image or gallery block), "b{block}.{item}" (card image).
+  function applySlots() {
+    var data = loadSlots();
+    if (!data) return;
+    if ('hero' in data) A.heroImage = data.hero ? data.hero.src : null;
+    var blocks = A.blocks || [];
+    Object.keys(data).forEach(function (id) {
+      var m = /^b(\d+)(?:\.(\d+))?$/.exec(id);
+      if (!m) return;
+      var block = blocks[+m[1]];
+      if (!block) return;
+      var v = data[id];
+      if (m[2] !== undefined) {
+        var item = (block.items || [])[+m[2]];
+        if (item) item.image = v ? v.src : null;
+      } else if (block.type === 'gallery') {
+        block.items = (v || []).map(function (g) { return { src: g.src, caption: g.caption || '' }; });
+      } else if (block.type === 'image') {
+        block.src = v ? v.src : null;
+        if (v && v.caption) block.caption = v.caption;
+      }
+    });
+  }
 
   /* ── Page ──────────────────────────────────────────── */
 
