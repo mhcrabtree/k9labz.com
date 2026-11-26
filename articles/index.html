@@ -121,7 +121,7 @@ var ARTICLES = [
     if (!data) return;
     for (var i = 0; i < ARTICLES.length; i++) {
       var v = data['card.' + ARTICLES[i].slug];
-      if (v !== undefined) ARTICLES[i].thumbnail = v ? v.src : null;
+      if (v !== undefined) { ARTICLES[i].thumbnail = v ? v.src : null; ARTICLES[i].thumbAlt = v && v.alt || ''; }
     }
   }
 
@@ -131,7 +131,7 @@ var ARTICLES = [
       var a = ARTICLES[i];
       if (cat && a.category !== cat) continue;
       var img = a.thumbnail
-        ? '<img class="k9-index-card-img" src="' + esc(a.thumbnail) + '" alt="' + esc(a.title) + '">'
+        ? '<img class="k9-index-card-img" src="' + esc(a.thumbnail) + '" alt="' + esc(a.thumbAlt || a.title) + '">'
         : '<div class="k9-placeholder">' + esc(a.title) + '</div>';
 
       html += (

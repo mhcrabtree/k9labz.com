@@ -78,7 +78,11 @@
   function applySlots() {
     var data = loadSlots();
     if (!data) return;
-    if ('hero' in data) A.heroImage = data.hero ? data.hero.src : null;
+    if ('hero' in data) {
+      A.heroImage = data.hero ? data.hero.src : null;
+      A.heroCaption = data.hero && data.hero.caption || '';
+      A.heroAlt = data.hero && data.hero.alt || '';
+    }
     var blocks = A.blocks || [];
     Object.keys(data).forEach(function (id) {
       var m = /^b(\d+)(?:\.(\d+))?$/.exec(id);
@@ -88,12 +92,13 @@
       var v = data[id];
       if (m[2] !== undefined) {
         var item = (block.items || [])[+m[2]];
-        if (item) item.image = v ? v.src : null;
+        if (item) { item.image = v ? v.src : null; item.imageAlt = v && v.alt || ''; }
       } else if (block.type === 'gallery') {
-        block.items = (v || []).map(function (g) { return { src: g.src, caption: g.caption || '' }; });
+        block.items = (v || []).map(function (g) { return { src: g.src, caption: g.caption || '', alt: g.alt || '' }; });
       } else if (block.type === 'image') {
         block.src = v ? v.src : null;
         if (v && v.caption) block.caption = v.caption;
+        block.alt = v && v.alt || '';
       }
     });
   }
@@ -137,7 +142,8 @@
         (img === false ? '' :
           '<div class="k9-hero-image">' +
             (img
-              ? '<img src="' + esc(img) + '" alt="' + esc(A.title) + '">'
+              ? '<img src="' + esc(img) + '" alt="' + esc(A.heroAlt || A.title) + '">' +
+                (A.heroCaption ? '<div class="k9-hero-caption">' + esc(A.heroCaption) + '</div>' : '')
               : '<div class="k9-placeholder">Hero Photo<br>Coming Soon</div>') +
           '</div>') +
       '</header>'
@@ -187,7 +193,7 @@
       html += (
         '<div class="k9-card">' +
           (c.image
-            ? '<img src="' + esc(c.image) + '" alt="' + esc(c.title) + '">'
+            ? '<img src="' + esc(c.image) + '" alt="' + esc(c.imageAlt || c.title) + '">'
             : c.swatch
               ? '<div class="k9-card-swatch" style="background:' + esc(c.swatch) + '"></div>'
               : '<div class="k9-placeholder">' + esc(c.kicker || c.title) + '</div>') +
@@ -291,7 +297,7 @@
     return (
       '<figure class="k9-figure">' +
         (b.src
-          ? '<img src="' + esc(b.src) + '" alt="' + esc(b.caption) + '" loading="lazy">'
+          ? '<img src="' + esc(b.src) + '" alt="' + esc(b.alt || b.caption) + '" loading="lazy">'
           : '<div class="k9-placeholder">Photo Coming Soon</div>') +
         (b.caption ? '<figcaption>' + esc(b.caption) + '</figcaption>' : '') +
       '</figure>'
@@ -305,7 +311,7 @@
     for (var i = 0; i < g.length; i++) {
       html += (
         '<figure>' +
-          '<img src="' + esc(g[i].src) + '" alt="' + esc(g[i].caption) + '" loading="lazy">' +
+          '<img src="' + esc(g[i].src) + '" alt="' + esc(g[i].alt || g[i].caption) + '" loading="lazy">' +
           (g[i].caption ? '<figcaption>' + esc(g[i].caption) + '</figcaption>' : '') +
         '</figure>'
       );

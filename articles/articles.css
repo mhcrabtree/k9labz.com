@@ -197,6 +197,7 @@ h1, h2, h3, .k9-label {
 
 .k9-hero-image { margin-top: 24px; border: 1px solid var(--k9-line); }
 .k9-hero-image img { display: block; width: 100%; height: auto; }
+.k9-hero-caption { padding: 8px 12px; font-size: 0.85rem; color: var(--k9-text-muted); border-top: 1px solid var(--k9-line); }
 
 /* ── Sections ────────────────────────────────────────── */
 
