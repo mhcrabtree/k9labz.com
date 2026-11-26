@@ -121,7 +121,7 @@ var ARTICLES = [
     if (!data) return;
     for (var i = 0; i < ARTICLES.length; i++) {
       var v = data['card.' + ARTICLES[i].slug];
-      if (v !== undefined) { ARTICLES[i].thumbnail = v ? v.src : null; ARTICLES[i].thumbAlt = v && v.alt || ''; }
+      if (v !== undefined) { ARTICLES[i].thumbnail = v ? v.src : null; ARTICLES[i].thumbAlt = v && (v.alt || v.caption) || ''; }
     }
   }
 

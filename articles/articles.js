@@ -81,7 +81,7 @@
     if ('hero' in data) {
       A.heroImage = data.hero ? data.hero.src : null;
       A.heroCaption = data.hero && data.hero.caption || '';
-      A.heroAlt = data.hero && data.hero.alt || '';
+      A.heroAlt = data.hero && (data.hero.alt || data.hero.caption) || '';
     }
     var blocks = A.blocks || [];
     Object.keys(data).forEach(function (id) {
@@ -92,13 +92,13 @@
       var v = data[id];
       if (m[2] !== undefined) {
         var item = (block.items || [])[+m[2]];
-        if (item) { item.image = v ? v.src : null; item.imageAlt = v && v.alt || ''; }
+        if (item) { item.image = v ? v.src : null; item.imageAlt = v && (v.alt || v.caption) || ''; }
       } else if (block.type === 'gallery') {
-        block.items = (v || []).map(function (g) { return { src: g.src, caption: g.caption || '', alt: g.alt || '' }; });
+        block.items = (v || []).map(function (g) { return { src: g.src, caption: g.caption || '', alt: g.alt || g.caption || '' }; });
       } else if (block.type === 'image') {
         block.src = v ? v.src : null;
         if (v && v.caption) block.caption = v.caption;
-        block.alt = v && v.alt || '';
+        block.alt = v && (v.alt || v.caption) || '';
       }
     });
   }
